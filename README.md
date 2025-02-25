@@ -18,8 +18,8 @@
 * Secret word to encrypt passwords
   JWT_SECRET=an_aleatory_hash
 * Create a space to upload images in [Cloudinary](https://cloudinary.com/)
-  CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@
-  CLOUDINARY_FOLDER=
+  * CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@
+  * CLOUDINARY_FOLDER=
 
 ## Node-Modules
 
