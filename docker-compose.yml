@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  duacode-db:
+    image: mysql:latest
+    restart: always
+    volumes:
+      - ./mysql_data:/var/lib/mysql/
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql25
+      MYSQL_DATABASE: duacode
+      MYSQL_USER: workuser
+      MYSQL_PASSWORD: sevilla25
+    ports:
+      - 3307:3306
+    expose:
+      - '3307'
+
+  adminer-db:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
