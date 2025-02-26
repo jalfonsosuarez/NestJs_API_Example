@@ -10,8 +10,8 @@ import { CreateDuacodeDto } from './dto/create-duacode.dto';
 import { UpdateDuacodeDto } from './dto/update-duacode.dto';
 import { PrismaClient } from '@prisma/client';
 import { DuacodeInterface } from 'src/interfaces/duacode.interface';
-import { PaginationDto } from '../user/dto/pagination.dto';
 import { SkillInterface } from 'src/interfaces';
+import { PaginationDto } from './dto/pagination.dto';
 
 @Injectable()
 export class DuacodeService extends PrismaClient implements OnModuleInit {
@@ -67,6 +67,9 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
       const totalPages = await this.duacode.count({
         where: {
           is_deleted: false,
+          name: paginationDto.duacodeName
+            ? { contains: paginationDto.duacodeName }
+            : undefined,
         },
       });
 
@@ -75,6 +78,9 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
         take: perPage,
         where: {
           is_deleted: false,
+          name: paginationDto.duacodeName
+            ? { contains: paginationDto.duacodeName }
+            : undefined,
         },
         orderBy: [
           {

@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsPositive, IsOptional } from 'class-validator';
+import { IsPositive, IsOptional, IsString } from 'class-validator';
 
 export class PaginationDto {
   @IsPositive()
@@ -11,4 +11,8 @@ export class PaginationDto {
   @IsOptional()
   @Type(() => Number)
   limit?: number = 10;
+
+  @IsString()
+  @IsOptional()
+  duacodeName?: string;
 }

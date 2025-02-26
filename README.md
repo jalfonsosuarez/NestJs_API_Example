@@ -2,7 +2,7 @@
 
 * Auth
 * User CRUD
-* Usert roles
+* User roles
 * Duacode CRUD
 
 # Necessary instalations
