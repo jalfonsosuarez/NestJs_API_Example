@@ -16,7 +16,7 @@ export class CreateDuacodeDto {
   @ApiProperty({
     description: 'Duacode NIF',
     required: true,
-    example: 'A Duacode description',
+    example: 'A23456432',
   })
   @IsString()
   nif: string;
