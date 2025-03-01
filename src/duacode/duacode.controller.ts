@@ -8,32 +8,58 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  HttpStatus,
 } from '@nestjs/common';
 import { DuacodeService } from './duacode.service';
 import { CreateDuacodeDto } from './dto/create-duacode.dto';
 import { UpdateDuacodeDto } from './dto/update-duacode.dto';
-import { PaginationDto } from './dto/pagination.dto';
+import { DuacodePaginationDto } from './dto/duacode.pagination.dto';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Duacode')
 @Controller('duacode')
 export class DuacodeController {
   constructor(private readonly duacodeService: DuacodeService) {}
 
   @Post()
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'The Duacode has been successfully created.',
+    type: CreateDuacodeDto,
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   async create(@Body() createDuacodeDto: CreateDuacodeDto) {
     return await this.duacodeService.create(createDuacodeDto);
   }
 
   @Get()
-  async findAll(@Query() paginationDto: PaginationDto) {
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Return a list of Duacodes.',
+    type: DuacodePaginationDto,
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
+  async findAll(@Query() paginationDto: DuacodePaginationDto) {
     return await this.duacodeService.findAll(paginationDto);
   }
 
   @Get(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Return a Duacode.',
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.duacodeService.findOne(id);
   }
 
   @Patch(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Update a Duacode.',
+    type: CreateDuacodeDto,
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateDuacodeDto: UpdateDuacodeDto,
@@ -42,6 +68,11 @@ export class DuacodeController {
   }
 
   @Delete(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Delete a Duacode. Make a soft delete.',
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.duacodeService.remove(id);
   }

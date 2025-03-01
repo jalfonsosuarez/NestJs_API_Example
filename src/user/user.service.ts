@@ -5,11 +5,14 @@ import {
   Logger,
   OnModuleInit,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaClient, User } from '@prisma/client';
-import { ChangePasswordDto, PaginationDto } from './dto';
 import * as bcrypt from 'bcrypt';
+import {
+  CreateUserDto,
+  UserPaginationDto,
+  UpdateUserDto,
+  ChangePasswordDto,
+} from './dto';
 
 @Injectable()
 export class UserService extends PrismaClient implements OnModuleInit {
@@ -37,7 +40,7 @@ export class UserService extends PrismaClient implements OnModuleInit {
     }
   }
 
-  async findAll(paginationDto: PaginationDto) {
+  async findAll(paginationDto: UserPaginationDto) {
     try {
       const totalPages = await this.user.count({
         where: {
@@ -87,7 +90,7 @@ export class UserService extends PrismaClient implements OnModuleInit {
     }
   }
 
-  async findInactives(paginationDto: PaginationDto) {
+  async findInactives(paginationDto: UserPaginationDto) {
     const totalPages = await this.user.count({
       where: {
         role: paginationDto.role,

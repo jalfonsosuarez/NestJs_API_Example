@@ -6,12 +6,14 @@ import {
   Logger,
   OnModuleInit,
 } from '@nestjs/common';
-import { CreateDuacodeDto } from './dto/create-duacode.dto';
-import { UpdateDuacodeDto } from './dto/update-duacode.dto';
 import { PrismaClient } from '@prisma/client';
 import { DuacodeInterface } from 'src/interfaces/duacode.interface';
 import { SkillInterface } from 'src/interfaces';
-import { PaginationDto } from './dto/pagination.dto';
+import {
+  CreateDuacodeDto,
+  DuacodePaginationDto,
+  UpdateDuacodeDto,
+} from './dto';
 
 @Injectable()
 export class DuacodeService extends PrismaClient implements OnModuleInit {
@@ -59,16 +61,16 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
     }
   }
 
-  async findAll(paginationDto: PaginationDto) {
-    const currentPage = paginationDto.page || 1;
-    const perPage = paginationDto.limit || 10;
+  async findAll(duacodePaginationDto: DuacodePaginationDto) {
+    const currentPage = duacodePaginationDto.page || 1;
+    const perPage = duacodePaginationDto.limit || 10;
 
     try {
       const totalPages = await this.duacode.count({
         where: {
           is_deleted: false,
-          name: paginationDto.duacodeName
-            ? { contains: paginationDto.duacodeName }
+          name: duacodePaginationDto.duacodeName
+            ? { contains: duacodePaginationDto.duacodeName }
             : undefined,
         },
       });
@@ -78,8 +80,8 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
         take: perPage,
         where: {
           is_deleted: false,
-          name: paginationDto.duacodeName
-            ? { contains: paginationDto.duacodeName }
+          name: duacodePaginationDto.duacodeName
+            ? { contains: duacodePaginationDto.duacodeName }
             : undefined,
         },
         orderBy: [

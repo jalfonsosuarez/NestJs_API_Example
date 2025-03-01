@@ -8,33 +8,62 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  HttpStatus,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { ChangePasswordDto, PaginationDto } from './dto';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  CreateUserDto,
+  UserPaginationDto,
+  ChangePasswordDto,
+  UpdateUserDto,
+} from './dto';
 
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'The User has been successfully created.',
+    type: CreateUserDto,
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
   @Get()
-  findAll(@Query() paginationDto: PaginationDto) {
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Return a list of Users',
+    type: UserPaginationDto,
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
+  findAll(@Query() paginationDto: UserPaginationDto) {
     return this.userService.findAll(paginationDto);
   }
 
   @Get('inactives')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Return a list of inactive Users',
+    type: UserPaginationDto,
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   // @Auth(ValidRoles.admin, ValidRoles.superUser)
-  async findInactives(@Query() paginationDto: PaginationDto) {
+  async findInactives(@Query() paginationDto: UserPaginationDto) {
     return await this.userService.findInactives(paginationDto);
   }
 
   @Get('email')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Return a User.',
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   // @Auth(ValidRoles.admin, ValidRoles.superUser)
   async findEmail(@Query() email: string) {
     console.log('get email');
@@ -42,18 +71,35 @@ export class UserController {
   }
 
   @Get(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Return a User.',
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   // @Auth(ValidRoles.admin, ValidRoles.superUser)
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.userService.findOne(id);
   }
 
   @Patch('changepwd')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Return a User',
+    type: ChangePasswordDto,
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   // @Auth(ValidRoles.admin, ValidRoles.user)
   async changePassword(@Body() changePasswordDto: ChangePasswordDto) {
     return await this.userService.changePassword(changePasswordDto);
   }
 
   @Patch(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Update User',
+    type: UpdateUserDto,
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   // @Auth(ValidRoles.admin)
   async update(
     @Param('id', ParseUUIDPipe) id: string,
@@ -63,12 +109,22 @@ export class UserController {
   }
 
   @Delete(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Delete a User. Make a soft delete.',
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   // @Auth(ValidRoles.admin)
   async setInactive(@Param('id') id: string) {
     return this.userService.setInactive(id);
   }
 
   @Get('updatepwd')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Update user password.',
+  })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   // @Auth(ValidRoles.admin)
   async updatePwd() {
     return await this.userService.updatePwd();
