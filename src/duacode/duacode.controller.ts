@@ -15,6 +15,8 @@ import { CreateDuacodeDto } from './dto/create-duacode.dto';
 import { UpdateDuacodeDto } from './dto/update-duacode.dto';
 import { DuacodePaginationDto } from './dto/duacode.pagination.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Auth } from 'src/auth/decorators';
+import { ValidRoles } from 'src/auth/interfaces';
 
 @ApiTags('Duacode')
 @Controller('duacode')
@@ -28,6 +30,7 @@ export class DuacodeController {
     type: CreateDuacodeDto,
   })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
+  @Auth(ValidRoles.admin, ValidRoles.superUser)
   async create(@Body() createDuacodeDto: CreateDuacodeDto) {
     return await this.duacodeService.create(createDuacodeDto);
   }
@@ -38,6 +41,7 @@ export class DuacodeController {
     description: 'Return a list of Duacodes.',
     type: DuacodePaginationDto,
   })
+  @Auth(ValidRoles.admin, ValidRoles.superUser)
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   async findAll(@Query() paginationDto: DuacodePaginationDto) {
     return await this.duacodeService.findAll(paginationDto);
@@ -48,6 +52,7 @@ export class DuacodeController {
     status: HttpStatus.OK,
     description: 'Return a Duacode.',
   })
+  @Auth(ValidRoles.admin, ValidRoles.superUser)
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.duacodeService.findOne(id);
@@ -59,6 +64,7 @@ export class DuacodeController {
     description: 'Update a Duacode.',
     type: CreateDuacodeDto,
   })
+  @Auth(ValidRoles.admin, ValidRoles.superUser)
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   async update(
     @Param('id', ParseUUIDPipe) id: string,
@@ -72,6 +78,7 @@ export class DuacodeController {
     status: HttpStatus.OK,
     description: 'Delete a Duacode. Make a soft delete.',
   })
+  @Auth(ValidRoles.admin, ValidRoles.superUser)
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.duacodeService.remove(id);
