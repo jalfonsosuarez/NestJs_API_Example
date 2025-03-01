@@ -14,6 +14,7 @@ export class CreateSkillDto {
   @ApiProperty({
     description: 'Duacode Skill description.',
     required: false,
+    example: 'NodeJs and NestJs expert.',
   })
   @IsString()
   description: string;
@@ -26,6 +27,7 @@ export class CreateSkillDto {
       'If the Duacode Skill is deleted. For delete or update Skill only.',
     required: false,
     default: false,
+    example: false,
   })
   @IsBoolean()
   @IsOptional()

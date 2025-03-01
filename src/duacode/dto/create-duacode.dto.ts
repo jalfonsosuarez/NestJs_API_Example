@@ -16,6 +16,7 @@ export class CreateDuacodeDto {
   @ApiProperty({
     description: 'Duacode NIF',
     required: true,
+    example: 'A Duacode description',
   })
   @IsString()
   nif: string;
@@ -23,6 +24,7 @@ export class CreateDuacodeDto {
   @ApiProperty({
     description: 'Duacode name',
     required: true,
+    example: 'A Duacode name',
   })
   @IsString()
   name: string;
@@ -30,6 +32,7 @@ export class CreateDuacodeDto {
   @ApiProperty({
     description: 'Duacode boografy',
     required: true,
+    example: 'A Duacode is a person that work with Duadode apps.',
   })
   @IsString()
   biografy: string;
@@ -37,6 +40,7 @@ export class CreateDuacodeDto {
   @ApiProperty({
     description: 'Duacode work departament',
     required: false,
+    example: 'Doacode works into development departament.',
   })
   @IsString()
   departament: string;
@@ -44,6 +48,7 @@ export class CreateDuacodeDto {
   @ApiProperty({
     description: 'Duacode work station',
     required: false,
+    example: 'Duacode senior NodeJs and NestJs developer',
   })
   @IsString()
   workstation: string;
@@ -60,6 +65,8 @@ export class CreateDuacodeDto {
   @ApiProperty({
     description: 'Duacode url fotagrafy',
     required: false,
+    example:
+      'https://res.cloudinary.com/dyqanox0e/image/upload/v1731514460/zapaweb/images/mxbgkoy9kmzvofnt4ts3.jpg',
   })
   @IsString()
   @IsOptional()
@@ -69,6 +76,7 @@ export class CreateDuacodeDto {
     description: 'Duacode likes spanish omelet with or without onion',
     required: true,
     default: false,
+    example: true,
   })
   @IsBoolean()
   @IsOptional()
@@ -78,6 +86,7 @@ export class CreateDuacodeDto {
     description: 'Duacode birthdate',
     required: false,
     default: null,
+    example: '2004-05-23',
   })
   @IsDate()
   @IsOptional()

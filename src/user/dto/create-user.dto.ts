@@ -19,6 +19,7 @@ export class CreateUserDto {
   @ApiProperty({
     description: 'User first name.',
     required: true,
+    example: 'John',
   })
   @IsString()
   first_name: string;
@@ -26,6 +27,7 @@ export class CreateUserDto {
   @ApiProperty({
     description: 'User second name.',
     required: true,
+    example: 'Smith',
   })
   @IsString()
   second_name: string;
@@ -33,6 +35,7 @@ export class CreateUserDto {
   @ApiProperty({
     description: 'User email.',
     required: true,
+    example: 'john.smith@email.com',
   })
   @IsEmail()
   @IsString()
@@ -44,6 +47,7 @@ export class CreateUserDto {
     required: true,
     minLength: 6,
     maxLength: 50,
+    example: 'Ab1234',
   })
   @IsString()
   @MinLength(6)
@@ -58,6 +62,7 @@ export class CreateUserDto {
     description: `User role. It must be one of ADMIN | SUPERUSER | USER`,
     required: false,
     default: 'USER',
+    example: 'USER',
   })
   @IsOptional()
   @IsEnum(UserRoleList, {
