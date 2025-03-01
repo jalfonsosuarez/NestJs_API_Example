@@ -14,6 +14,7 @@ export class LoginUserDto {
   @ApiProperty({
     description: 'User email.',
     required: true,
+    example: 'user@email.com',
   })
   @IsString()
   @IsEmail()
@@ -22,6 +23,7 @@ export class LoginUserDto {
   @ApiProperty({
     description: 'User password.',
     required: true,
+    example: 'A1234b',
   })
   @IsString()
   @MinLength(6)

@@ -4,12 +4,16 @@ import * as joi from 'joi';
 interface EnvVars {
   PORT: number;
   JWT_SECRET: string;
+  SWAGGER_USERNAME: string;
+  SWAGGER_PASSWORD: string;
 }
 
 const envSchema = joi
   .object({
     PORT: joi.number().required(),
     JWT_SECRET: joi.string().required(),
+    SWAGGER_USERNAME: joi.string().required(),
+    SWAGGER_PASSWORD: joi.string().required(),
   })
   .unknown(true);
 
@@ -28,4 +32,8 @@ const envVars: EnvVars = value;
 export const envs = {
   port: envVars.PORT,
   jwtSecret: envVars.JWT_SECRET,
+  swagger: {
+    userName: envVars.SWAGGER_USERNAME,
+    password: envVars.SWAGGER_PASSWORD,
+  },
 };
