@@ -13,7 +13,7 @@ import {
 import { UserService } from './user.service';
 import { Auth } from 'src/auth/decorators';
 import { ValidRoles } from 'src/auth/interfaces';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreateUserDto,
   UserPaginationDto,
@@ -21,6 +21,7 @@ import {
   UpdateUserDto,
 } from './dto';
 
+@ApiBearerAuth()
 @ApiTags('User')
 @Controller('user')
 export class UserController {

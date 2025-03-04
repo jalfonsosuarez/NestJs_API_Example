@@ -4,6 +4,8 @@ import * as joi from 'joi';
 interface EnvVars {
   PORT: number;
   JWT_SECRET: string;
+  CLOUDINARY_URL: string;
+  CLOUDINARY_FOLDER: string;
   SWAGGER_USERNAME: string;
   SWAGGER_PASSWORD: string;
 }
@@ -12,6 +14,8 @@ const envSchema = joi
   .object({
     PORT: joi.number().required(),
     JWT_SECRET: joi.string().required(),
+    CLOUDINARY_URL: joi.string().required(),
+    CLOUDINARY_FOLDER: joi.string().required(),
     SWAGGER_USERNAME: joi.string().required(),
     SWAGGER_PASSWORD: joi.string().required(),
   })
@@ -35,5 +39,9 @@ export const envs = {
   swagger: {
     userName: envVars.SWAGGER_USERNAME,
     password: envVars.SWAGGER_PASSWORD,
+  },
+  cloudinary: {
+    url: envVars.CLOUDINARY_URL,
+    folder: envVars.CLOUDINARY_FOLDER,
   },
 };

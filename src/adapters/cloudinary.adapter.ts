@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { v2 as cloudinary } from 'cloudinary';
+import { envs } from 'src/config';
 
 export class CloudinaryAdapter {
-  static async uploadFiles(files: Array<Express.Multer.File>) {
-    return await uploadImages(files);
+  static async uploadFile(file: Express.Multer.File) {
+    return await uploadImage(file);
   }
 
   static async deleteFile(file: string): Promise<boolean> {
@@ -12,29 +13,19 @@ export class CloudinaryAdapter {
   }
 }
 
-const uploadImages = async (images: Array<Express.Multer.File>) => {
-  cloudinary.config(process.env.CLOUDINARY_URL ?? '');
-  const cloudinaryFolder = process.env.CLOUDINARY_FOLDER ?? '';
+const uploadImage = async (image: Express.Multer.File) => {
+  cloudinary.config(envs.cloudinary.url ?? '');
+  const cloudinaryFolder = envs.cloudinary.folder ?? '';
   try {
-    const uploadPromises = images.map(async (image) => {
-      try {
-        const buffer = image.buffer;
-        const base64Image = Buffer.from(buffer).toString('base64');
-
-        return cloudinary.uploader
-          .upload(`data:image/png;base64,${base64Image}`, {
-            folder: cloudinaryFolder,
-          })
-          .then((r) => r.secure_url);
-      } catch (error) {
-        console.log(error);
-        return null;
-      }
-    });
-
-    const uploadImages = await Promise.all(uploadPromises);
-
-    return uploadImages;
+    const buffer = image.buffer;
+    const base64Image = Buffer.from(buffer).toString('base64');
+    const uploadedImage = await cloudinary.uploader.upload(
+      `data:image/png;base64,${base64Image}`,
+      {
+        folder: cloudinaryFolder,
+      },
+    );
+    return uploadedImage.url;
   } catch (error) {
     console.log(error);
     return null;

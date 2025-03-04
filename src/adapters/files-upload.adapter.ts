@@ -1,11 +1,9 @@
 import { CloudinaryAdapter } from './cloudinary.adapter';
 
-export class FilesUploadAdapter {
-  static async uploadFiles(
-    files: Array<Express.Multer.File>,
-  ): Promise<(string | null)[] | null> {
-    const filesUploaded = await CloudinaryAdapter.uploadFiles(files);
-    return filesUploaded;
+export class FileUploadAdapter {
+  static async uploadFile(file: Express.Multer.File): Promise<string | null> {
+    const fileUploaded = await CloudinaryAdapter.uploadFile(file);
+    return fileUploaded;
   }
 
   static async deleteFile(file: string): Promise<boolean> {
