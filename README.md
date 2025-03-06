@@ -38,3 +38,9 @@ Generate Prisma Client `npx prisma generate`
 ## Start project
 
 * Ejecutar proyecto `npm run start:dev`
+
+## Api DOCS
+
+* localhost:3000/api/docs
+
+
