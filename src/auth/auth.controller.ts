@@ -1,15 +1,23 @@
-import { Controller, Get, Body, UseGuards, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Body,
+  UseGuards,
+  HttpStatus,
+  Put,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthGuard } from './guards/auth.guard';
 import { Token } from './decorators';
-import { ApiResponse } from '@nestjs/swagger/dist';
+import { ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 
+@ApiTags('Duacode Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get('login')
+  @Put('login')
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Log a user into API.',
