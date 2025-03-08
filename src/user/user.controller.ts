@@ -13,7 +13,12 @@ import {
 import { UserService } from './user.service';
 import { Auth } from 'src/auth/decorators';
 import { ValidRoles } from 'src/auth/interfaces';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiExcludeEndpoint,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   CreateUserDto,
   UserPaginationDto,
@@ -125,11 +130,7 @@ export class UserController {
   }
 
   @Get('updatepwd')
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Update user password.',
-  })
-  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
+  @ApiExcludeEndpoint()
   @Auth(ValidRoles.admin)
   async updatePwd() {
     return await this.userService.updatePwd();

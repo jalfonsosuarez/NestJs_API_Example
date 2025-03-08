@@ -6,8 +6,6 @@ interface EnvVars {
   JWT_SECRET: string;
   CLOUDINARY_URL: string;
   CLOUDINARY_FOLDER: string;
-  SWAGGER_USERNAME: string;
-  SWAGGER_PASSWORD: string;
 }
 
 const envSchema = joi
@@ -16,8 +14,6 @@ const envSchema = joi
     JWT_SECRET: joi.string().required(),
     CLOUDINARY_URL: joi.string().required(),
     CLOUDINARY_FOLDER: joi.string().required(),
-    SWAGGER_USERNAME: joi.string().required(),
-    SWAGGER_PASSWORD: joi.string().required(),
   })
   .unknown(true);
 
@@ -36,10 +32,6 @@ const envVars: EnvVars = value;
 export const envs = {
   port: envVars.PORT,
   jwtSecret: envVars.JWT_SECRET,
-  swagger: {
-    userName: envVars.SWAGGER_USERNAME,
-    password: envVars.SWAGGER_PASSWORD,
-  },
   cloudinary: {
     url: envVars.CLOUDINARY_URL,
     folder: envVars.CLOUDINARY_FOLDER,

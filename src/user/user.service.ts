@@ -64,8 +64,8 @@ export class UserService extends PrismaClient implements OnModuleInit {
             second_name: true,
             email: true,
             role: true,
-            createdAt: true,
-            updatedAt: true,
+            createdAt: false,
+            updatedAt: false,
           },
           orderBy: [
             {
@@ -115,8 +115,8 @@ export class UserService extends PrismaClient implements OnModuleInit {
           email: true,
           role: true,
           is_active: true,
-          createdAt: true,
-          updatedAt: true,
+          createdAt: false,
+          updatedAt: false,
           inactiveAt: true,
         },
         orderBy: [
@@ -143,6 +143,10 @@ export class UserService extends PrismaClient implements OnModuleInit {
           id,
           is_active: true,
         },
+        omit: {
+          createdAt: true,
+          updatedAt: true,
+        },
       });
 
       if (!user)
@@ -164,6 +168,11 @@ export class UserService extends PrismaClient implements OnModuleInit {
       const user = await this.user.findFirst({
         where: {
           email: email,
+        },
+        omit: {
+          createdAt: true,
+          updatedAt: true,
+          inactiveAt: true,
         },
       });
 
@@ -219,6 +228,11 @@ export class UserService extends PrismaClient implements OnModuleInit {
       const updatedUser = this.user.update({
         data: updateUserDto,
         where: { id },
+        omit: {
+          createdAt: true,
+          updatedAt: true,
+          inactiveAt: true,
+        },
       });
       return updatedUser;
     } catch (error) {
@@ -247,6 +261,11 @@ export class UserService extends PrismaClient implements OnModuleInit {
         },
         where: {
           email,
+        },
+        omit: {
+          createdAt: true,
+          updatedAt: true,
+          inactiveAt: true,
         },
       });
     } catch (error) {
