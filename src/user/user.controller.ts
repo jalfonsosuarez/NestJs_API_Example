@@ -24,6 +24,7 @@ import {
   UserPaginationDto,
   ChangePasswordDto,
   UpdateUserDto,
+  EmailDto,
 } from './dto';
 
 @ApiBearerAuth()
@@ -75,9 +76,9 @@ export class UserController {
   })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   @Auth(ValidRoles.admin, ValidRoles.superUser)
-  async findEmail(@Query() email: string) {
-    console.log('get email');
-    return await this.userService.findEmail(email);
+  async findEmail(@Body() emailDto: EmailDto) {
+    console.log('get email', emailDto);
+    return await this.userService.findEmail(emailDto);
   }
 
   @Get(':id')
@@ -89,6 +90,13 @@ export class UserController {
   @Auth(ValidRoles.admin, ValidRoles.superUser)
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.userService.findOne(id);
+  }
+
+  @Patch('updatepwd')
+  @ApiExcludeEndpoint()
+  @Auth(ValidRoles.admin)
+  async updatePwd() {
+    return await this.userService.updatePwd();
   }
 
   @Patch('changepwd')
@@ -127,12 +135,5 @@ export class UserController {
   @Auth(ValidRoles.admin)
   async setInactive(@Param('id') id: string) {
     return this.userService.setInactive(id);
-  }
-
-  @Get('updatepwd')
-  @ApiExcludeEndpoint()
-  @Auth(ValidRoles.admin)
-  async updatePwd() {
-    return await this.userService.updatePwd();
   }
 }

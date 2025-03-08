@@ -36,6 +36,11 @@ export class AuthService extends PrismaClient implements OnModuleInit {
   async login(loginUserDto: LoginUserDto) {
     const user = await this.user.findFirst({
       where: { email: loginUserDto.email },
+      omit: {
+        createdAt: true,
+        updatedAt: true,
+        inactiveAt: true,
+      },
     });
 
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -46,7 +51,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
     if (!bcrypt.compareSync(loginUserDto.password, user.password))
       throw new HttpException('User/Password not valid', HttpStatus.NOT_FOUND);
 
-    const { password: __, ...rest } = user;
+    const { password: __, is_active: _, id: ___, ...rest } = user;
     const { id, first_name, second_name, email, role } = user;
 
     return {
@@ -70,6 +75,11 @@ export class AuthService extends PrismaClient implements OnModuleInit {
         throw new HttpException('User is inactive.', HttpStatus.UNAUTHORIZED);
 
       delete (userVerified as Partial<User>).password;
+      delete (userVerified as Partial<User>).createdAt;
+      delete (userVerified as Partial<User>).updatedAt;
+      delete (userVerified as Partial<User>).inactiveAt;
+      delete (userVerified as Partial<User>).is_active;
+      delete (userVerified as Partial<User>).id;
       return {
         user: userVerified,
         token: this.signJWT(user),

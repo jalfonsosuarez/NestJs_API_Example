@@ -12,6 +12,7 @@ import {
   UserPaginationDto,
   UpdateUserDto,
   ChangePasswordDto,
+  EmailDto,
 } from './dto';
 
 @Injectable()
@@ -28,6 +29,10 @@ export class UserService extends PrismaClient implements OnModuleInit {
       createUserDto.password = bcrypt.hashSync(createUserDto.password, 10);
       const newUser = await this.user.create({ data: createUserDto });
       delete (newUser as Partial<User>).password;
+      delete (newUser as Partial<User>).createdAt;
+      delete (newUser as Partial<User>).updatedAt;
+      delete (newUser as Partial<User>).inactiveAt;
+      delete (newUser as Partial<User>).is_active;
       return {
         user: newUser,
         token: 'abd',
@@ -66,6 +71,8 @@ export class UserService extends PrismaClient implements OnModuleInit {
             role: true,
             createdAt: false,
             updatedAt: false,
+            inactiveAt: false,
+            is_active: false,
           },
           orderBy: [
             {
@@ -136,7 +143,11 @@ export class UserService extends PrismaClient implements OnModuleInit {
     };
   }
 
-  async findOne(id: string) {
+  async findOne(
+    id: string,
+    deletePwd: boolean = true,
+    isInactive: boolean = false,
+  ) {
     try {
       const user = await this.user.findFirst({
         where: {
@@ -146,13 +157,14 @@ export class UserService extends PrismaClient implements OnModuleInit {
         omit: {
           createdAt: true,
           updatedAt: true,
+          inactiveAt: !isInactive,
+          is_active: !isInactive,
+          password: deletePwd,
         },
       });
 
       if (!user)
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-
-      delete (user as Partial<User>).password;
 
       return user;
     } catch (error) {
@@ -163,25 +175,22 @@ export class UserService extends PrismaClient implements OnModuleInit {
     }
   }
 
-  async findEmail(email: string, deletePwd: boolean = true) {
+  async findEmail(emailDto: EmailDto, deletePwd: boolean = true) {
     try {
       const user = await this.user.findFirst({
         where: {
-          email: email,
+          email: emailDto.email,
         },
         omit: {
           createdAt: true,
           updatedAt: true,
           inactiveAt: true,
+          password: deletePwd,
         },
       });
 
       if (!user)
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-
-      if (deletePwd) {
-        delete (user as Partial<User>).password;
-      }
 
       return user;
     } catch (error) {
@@ -194,7 +203,7 @@ export class UserService extends PrismaClient implements OnModuleInit {
 
   async setInactive(id: string) {
     try {
-      const user = await this.findOne(id);
+      const user = await this.findOne(id, true, true);
 
       if (user) {
         user.is_active = false;
@@ -232,6 +241,7 @@ export class UserService extends PrismaClient implements OnModuleInit {
           createdAt: true,
           updatedAt: true,
           inactiveAt: true,
+          is_active: true,
         },
       });
       return updatedUser;
@@ -247,7 +257,7 @@ export class UserService extends PrismaClient implements OnModuleInit {
     try {
       const { email, oldPassword, newPassword } = changePasswordDto;
 
-      const user = await this.findEmail(email, false);
+      const user = await this.findEmail({ email }, false);
 
       if (!bcrypt.compareSync(oldPassword, user.password))
         throw new HttpException(
@@ -266,6 +276,7 @@ export class UserService extends PrismaClient implements OnModuleInit {
           createdAt: true,
           updatedAt: true,
           inactiveAt: true,
+          is_active: true,
         },
       });
     } catch (error) {
