@@ -49,5 +49,5 @@ Generate Prisma Client `npx prisma generate`
 * Call to end-point POST user/firstuser
 * IMPORTANT: For safety, delete the related methods from userController and userService when you has been created the first user.
 * Now you can access the api with with email: 'admin@correo.com' and password: 'A123456b'.
-* You can edit the values form first user before run this end-point (into userService.ts file) and use the email and password that you set to login.
+* You can edit the values for the first user before run this end-point (into userService.ts file) and use the email and password that you set to login.
 
