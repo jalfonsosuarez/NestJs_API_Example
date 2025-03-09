@@ -42,7 +42,7 @@ Generate Prisma Client `npx prisma migrate dev --name init`
 
 ## Api DOCS
 
-* localhost:3000/api/docs
+* localhost:[port]/api/docs
 
 ## Create the first user into database
 
