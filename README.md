@@ -15,7 +15,7 @@
 
 * Copy .env.template to .env file and:
   * Replace user, password, host and port for yours own values.
-    DATABASE_URL="mysql://user:password@host:port/duacode"
+    DATABASE_URL="mysql://user:password@host:port/exampleDb"
   * Secret word to encrypt passwords.
     JWT_SECRET=an_aleatory_hash
   * Create a space to upload images in [Cloudinary](https://cloudinary.com/)
@@ -34,7 +34,7 @@ To instal database run docker command: docker compose up -d
 
 ## Create database
 
-Generate Prisma Client `npx prisma generate`
+Generate Prisma Client `npx prisma migrate dev --name init`
 
 ## Start project
 

@@ -6,26 +6,26 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { FileUploadAdapter } from '../adapters';
-import { Duacode, PrismaClient } from '@prisma/client';
+import { Example, PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class FilesService extends PrismaClient implements OnModuleInit {
-  private readonly logger = new Logger('DuacodeImage');
+  private readonly logger = new Logger('ExampleImage');
 
   async onModuleInit() {
     await this.$connect();
-    this.logger.log('DuacodeImage run');
+    this.logger.log('ExampleImage run');
   }
 
-  async uploadDuacodeImage(
-    duacodeId: string,
+  async uploadExampleImage(
+    exampleId: string,
     file: Express.Multer.File,
-  ): Promise<Duacode | null> {
+  ): Promise<Example | null> {
     try {
       const fileUploaded = await FileUploadAdapter.uploadFile(file);
-      const duacode = await this.duacode.update({
+      const example = await this.example.update({
         where: {
-          id: duacodeId,
+          id: exampleId,
         },
         data: {
           imageUrl: fileUploaded ?? '',
@@ -33,10 +33,10 @@ export class FilesService extends PrismaClient implements OnModuleInit {
         },
       });
 
-      return duacode;
+      return example;
     } catch (error) {
       throw new HttpException(
-        `Error updating Duacode Image ${error}`,
+        `Error updating Example Image ${error}`,
         HttpStatus.BAD_REQUEST,
       );
     }

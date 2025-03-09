@@ -12,9 +12,9 @@ import { Transform, Type } from 'class-transformer';
 import { ApiProperty, ApiSchema } from '@nestjs/swagger';
 
 @ApiSchema()
-export class CreateDuacodeDto {
+export class CreateExampleDto {
   @ApiProperty({
-    description: 'Duacode NIF',
+    description: 'Example NIF',
     required: true,
     example: 'A23456432',
   })
@@ -22,23 +22,23 @@ export class CreateDuacodeDto {
   nif: string;
 
   @ApiProperty({
-    description: 'Duacode name',
+    description: 'Example name',
     required: true,
-    example: 'A Duacode name',
+    example: 'A Example name',
   })
   @IsString()
   name: string;
 
   @ApiProperty({
-    description: 'Duacode boografy',
+    description: 'Example boografy',
     required: true,
-    example: 'A Duacode is a person that work with Duadode apps.',
+    example: 'A Example is a person that work with Duadode apps.',
   })
   @IsString()
   biografy: string;
 
   @ApiProperty({
-    description: 'Duacode work departament',
+    description: 'Example work departament',
     required: false,
     example: 'Doacode works into development departament.',
   })
@@ -46,15 +46,15 @@ export class CreateDuacodeDto {
   departament: string;
 
   @ApiProperty({
-    description: 'Duacode work station',
+    description: 'Example work station',
     required: false,
-    example: 'Duacode senior NodeJs and NestJs developer',
+    example: 'Example senior NodeJs and NestJs developer',
   })
   @IsString()
   workstation: string;
 
   @ApiProperty({
-    description: 'Duacode array of skills',
+    description: 'Example array of skills',
     required: false,
     type: CreateSkillDto,
     isArray: true,
@@ -63,7 +63,7 @@ export class CreateDuacodeDto {
   skills: CreateSkillDto[];
 
   @ApiProperty({
-    description: 'Duacode url fotagrafy',
+    description: 'Example url fotagrafy',
     required: false,
     example:
       'https://res.cloudinary.com/dyqanox0e/image/upload/v1731514460/zapaweb/images/mxbgkoy9kmzvofnt4ts3.jpg',
@@ -73,7 +73,7 @@ export class CreateDuacodeDto {
   imageUrl: string;
 
   @ApiProperty({
-    description: 'Duacode likes spanish omelet with or without onion',
+    description: 'Example likes spanish omelet with or without onion',
     required: true,
     default: false,
     example: true,
@@ -83,7 +83,7 @@ export class CreateDuacodeDto {
   omeletOnion: boolean;
 
   @ApiProperty({
-    description: 'Duacode birthdate',
+    description: 'Example birthdate',
     required: false,
     default: null,
     example: '2004-05-23',

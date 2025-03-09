@@ -1,7 +1,7 @@
 // import { ImageInterface } from './image.interface';
 import { SkillInterface } from './skill.interface';
 
-export interface DuacodeInterface {
+export interface ExampleInterface {
   id?: string;
   nif?: string;
   name?: string;

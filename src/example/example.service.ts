@@ -7,28 +7,27 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { DuacodeInterface } from 'src/interfaces/duacode.interface';
-import { SkillInterface } from 'src/interfaces';
+import { ExampleInterface, SkillInterface } from 'src/interfaces';
 import {
-  CreateDuacodeDto,
-  DuacodePaginationDto,
-  UpdateDuacodeDto,
+  CreateExampleDto,
+  ExamplePaginationDto,
+  UpdateExampleDto,
 } from './dto';
 
 @Injectable()
-export class DuacodeService extends PrismaClient implements OnModuleInit {
-  private readonly logger = new Logger('DuacodeService');
+export class ExampleService extends PrismaClient implements OnModuleInit {
+  private readonly logger = new Logger('ExampleService');
 
   async onModuleInit() {
     await this.$connect();
-    this.logger.log('DuacodeService run');
+    this.logger.log('ExampleService run');
   }
 
-  async create(createDuacodeDto: CreateDuacodeDto) {
+  async create(createExampleDto: CreateExampleDto) {
     try {
-      const { skills, ...rest } = createDuacodeDto;
+      const { skills, ...rest } = createExampleDto;
 
-      const newDuacode: DuacodeInterface = await this.duacode.create({
+      const newExample: ExampleInterface = await this.example.create({
         data: {
           nif: rest.nif,
           name: rest.name,
@@ -52,36 +51,36 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
         },
       });
 
-      return newDuacode;
+      return newExample;
     } catch (error) {
       throw new HttpException(
-        `Error creating Duacode ${error}`,
+        `Error creating Example ${error}`,
         HttpStatus.BAD_REQUEST,
       );
     }
   }
 
-  async findAll(duacodePaginationDto: DuacodePaginationDto) {
-    const currentPage = duacodePaginationDto.page || 1;
-    const perPage = duacodePaginationDto.limit || 10;
+  async findAll(examplePaginationDto: ExamplePaginationDto) {
+    const currentPage = examplePaginationDto.page || 1;
+    const perPage = examplePaginationDto.limit || 10;
 
     try {
-      const totalPages = await this.duacode.count({
+      const totalPages = await this.example.count({
         where: {
           is_deleted: false,
-          name: duacodePaginationDto.duacodeName
-            ? { contains: duacodePaginationDto.duacodeName }
+          name: examplePaginationDto.exampleName
+            ? { contains: examplePaginationDto.exampleName }
             : undefined,
         },
       });
 
-      const duacodes = await this.duacode.findMany({
+      const examples = await this.example.findMany({
         skip: (currentPage - 1) * perPage,
         take: perPage,
         where: {
           is_deleted: false,
-          name: duacodePaginationDto.duacodeName
-            ? { contains: duacodePaginationDto.duacodeName }
+          name: examplePaginationDto.exampleName
+            ? { contains: examplePaginationDto.exampleName }
             : undefined,
         },
         orderBy: [
@@ -108,7 +107,7 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
         },
       });
       return {
-        data: duacodes,
+        data: examples,
         meta: {
           total: totalPages,
           page: currentPage,
@@ -117,7 +116,7 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
       };
     } catch (error) {
       throw new HttpException(
-        `Error getting Duacodes ${error}`,
+        `Error getting Examples ${error}`,
         HttpStatus.NOT_FOUND,
       );
     }
@@ -125,7 +124,7 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
 
   async findOne(id: string) {
     try {
-      const product = await this.duacode.findFirst({
+      const product = await this.example.findFirst({
         where: {
           id: id,
           is_deleted: false,
@@ -153,9 +152,9 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
     }
   }
 
-  async update(id: string, updateDuacodeDto: UpdateDuacodeDto) {
+  async update(id: string, updateExampleDto: UpdateExampleDto) {
     try {
-      const { skills, ...rest } = updateDuacodeDto;
+      const { skills, ...rest } = updateExampleDto;
 
       const createSkills: SkillInterface[] = [];
       const updateSkills: SkillInterface[] = [];
@@ -175,7 +174,7 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
         }
       });
 
-      const updateDuacode: DuacodeInterface = await this.duacode.update({
+      const updateExample: ExampleInterface = await this.example.update({
         where: {
           id,
         },
@@ -213,10 +212,10 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
         });
       });
 
-      return updateDuacode;
+      return updateExample;
     } catch (error) {
       throw new HttpException(
-        `Error updating Duacode ${error}`,
+        `Error updating Example ${error}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -224,7 +223,7 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
 
   async remove(id: string) {
     try {
-      const duacode = await this.duacode.update({
+      const example = await this.example.update({
         where: {
           id,
         },
@@ -236,17 +235,17 @@ export class DuacodeService extends PrismaClient implements OnModuleInit {
 
       await this.skills.updateMany({
         where: {
-          duacodeId: id,
+          exampleId: id,
         },
         data: {
           is_deleted: true,
           deletedAt: new Date(),
         },
       });
-      return duacode;
+      return example;
     } catch (error) {
       throw new HttpException(
-        `Error deleting Duacode ${error}`,
+        `Error deleting Example ${error}`,
         HttpStatus.BAD_REQUEST,
       );
     }

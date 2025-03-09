@@ -1,7 +1,7 @@
 {
-  "name": "duacode",
+  "name": "example",
   "version": "0.0.1",
-  "description": "Duacode project",
+  "description": "Example project",
   "author": "José Alfonso Suárez Moreno (joseasuarez@gmail.com)",
   "private": true,
   "license": "MIT",

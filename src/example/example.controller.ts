@@ -14,76 +14,76 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Auth } from 'src/auth/decorators';
 import { ValidRoles } from 'src/auth/interfaces';
 import {
-  CreateDuacodeDto,
-  DuacodePaginationDto,
-  UpdateDuacodeDto,
+  CreateExampleDto,
+  ExamplePaginationDto,
+  UpdateExampleDto,
 } from './dto';
-import { DuacodeService } from './duacode.service';
+import { ExampleService } from './example.service';
 
-@ApiTags('Duacode')
+@ApiTags('Example')
 @ApiBearerAuth()
-@Controller('duacode')
-export class DuacodeController {
-  constructor(private readonly duacodeService: DuacodeService) {}
+@Controller('example')
+export class ExampleController {
+  constructor(private readonly exampleService: ExampleService) {}
 
   @Post()
   @Auth(ValidRoles.admin, ValidRoles.superUser)
   @ApiResponse({
     status: HttpStatus.CREATED,
-    description: 'The Duacode has been successfully created.',
-    type: CreateDuacodeDto,
+    description: 'The Example has been successfully created.',
+    type: CreateExampleDto,
   })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
-  async create(@Body() createDuacodeDto: CreateDuacodeDto) {
-    return await this.duacodeService.create(createDuacodeDto);
+  async create(@Body() createExampleDto: CreateExampleDto) {
+    return await this.exampleService.create(createExampleDto);
   }
 
   @Get()
   @Auth(ValidRoles.admin, ValidRoles.superUser)
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Return a list of Duacodes.',
-    type: DuacodePaginationDto,
+    description: 'Return a list of Examples.',
+    type: ExamplePaginationDto,
   })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
-  async findAll(@Query() paginationDto: DuacodePaginationDto) {
-    return await this.duacodeService.findAll(paginationDto);
+  async findAll(@Query() paginationDto: ExamplePaginationDto) {
+    return await this.exampleService.findAll(paginationDto);
   }
 
   @Get(':id')
   @Auth(ValidRoles.admin, ValidRoles.superUser)
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Return a Duacode.',
+    description: 'Return a Example.',
   })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.duacodeService.findOne(id);
+    return await this.exampleService.findOne(id);
   }
 
   @Patch(':id')
   @Auth(ValidRoles.admin, ValidRoles.superUser)
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Update a Duacode.',
-    type: CreateDuacodeDto,
+    description: 'Update a Example.',
+    type: CreateExampleDto,
   })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   async update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() updateDuacodeDto: UpdateDuacodeDto,
+    @Body() updateExampleDto: UpdateExampleDto,
   ) {
-    return await this.duacodeService.update(id, updateDuacodeDto);
+    return await this.exampleService.update(id, updateExampleDto);
   }
 
   @Delete(':id')
   @Auth(ValidRoles.admin, ValidRoles.superUser)
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Delete a Duacode. Make a soft delete.',
+    description: 'Delete a Example. Make a soft delete.',
   })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   async remove(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.duacodeService.remove(id);
+    return await this.exampleService.remove(id);
   }
 }

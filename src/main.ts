@@ -17,11 +17,11 @@ async function bootstrap() {
   );
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Duacode')
-    .setDescription('The Duacode API description')
+    .setTitle('Example')
+    .setDescription('The Example API description')
     .setVersion('1.0')
     .addBearerAuth()
-    .addTag('duacode')
+    .addTag('example')
     .build();
   const documentFactory = () =>
     SwaggerModule.createDocument(app, swaggerConfig);

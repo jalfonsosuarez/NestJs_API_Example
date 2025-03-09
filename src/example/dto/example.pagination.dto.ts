@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsPositive, IsOptional, IsString } from 'class-validator';
 
-export class DuacodePaginationDto {
+export class ExamplePaginationDto {
   @ApiProperty({
     description: 'Page number. Must be a positive number.',
     required: false,
@@ -24,11 +24,11 @@ export class DuacodePaginationDto {
   limit?: number = 10;
 
   @ApiProperty({
-    description: 'Duacode name to be filtered.',
+    description: 'Example name to be filtered.',
     required: false,
     default: null,
   })
   @IsString()
   @IsOptional()
-  duacodeName?: string;
+  exampleName?: string;
 }

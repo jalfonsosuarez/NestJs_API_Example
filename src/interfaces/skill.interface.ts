@@ -1,6 +1,6 @@
 export interface SkillInterface {
   id?: string;
-  duacodeId?: string;
+  exampleId?: string;
   description: string;
   is_deleted?: boolean;
   createdAt?: Date;

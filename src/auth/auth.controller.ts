@@ -12,7 +12,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { Token } from './decorators';
 import { ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 
-@ApiTags('Duacode Auth')
+@ApiTags('Example Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
