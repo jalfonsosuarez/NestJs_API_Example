@@ -1,9 +1,9 @@
-# Duacode project
+# NodeJs and NestJs API Example
 
 * Auth
 * User CRUD
 * User roles
-* Duacode CRUD
+* Example CRUD
 
 # Necessary instalations
 
@@ -13,13 +13,14 @@
 
 ## Environment values
 
-* Replace user, password, host and port for yours own values.
-  DATABASE_URL="mysql://user:password@host:port/duacode"
-* Secret word to encrypt passwords.
-  JWT_SECRET=an_aleatory_hash
-* Create a space to upload images in [Cloudinary](https://cloudinary.com/)
-  * CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@
-  * CLOUDINARY_FOLDER=
+* Copy .env.template to .env file and:
+  * Replace user, password, host and port for yours own values.
+    DATABASE_URL="mysql://user:password@host:port/duacode"
+  * Secret word to encrypt passwords.
+    JWT_SECRET=an_aleatory_hash
+  * Create a space to upload images in [Cloudinary](https://cloudinary.com/)
+    * CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@
+    * CLOUDINARY_FOLDER=
 
 ## Node-Modules
 
@@ -37,7 +38,7 @@ Generate Prisma Client `npx prisma generate`
 
 ## Start project
 
-* Ejecutar proyecto `pnpm start:dev`
+* Run this API `pnpm start:dev`
 
 ## Api DOCS
 
@@ -49,5 +50,4 @@ Generate Prisma Client `npx prisma generate`
 * Call to end-point POST user/firstuser
 * IMPORTANT: For safety, delete the related methods from userController and userService when you has been created the first user.
 * Now you can access the api with with email: 'admin@correo.com' and password: 'A123456b'.
-* You can edit the values for the first user before run this end-point (into userService.ts file) and use the email and password that you set to login.
-
+* TIP: You can edit the values for the first user before run this end-point (into userService.ts file) and use the email and password that you set to login.
