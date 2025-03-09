@@ -45,6 +45,35 @@ export class UserService extends PrismaClient implements OnModuleInit {
     }
   }
 
+  //! For safety, delete this method when you create a firsUser.
+  async createFirstUser() {
+    try {
+      const newUser = await this.user.create({
+        data: {
+          first_name: 'Administrator',
+          second_name: 'Admin',
+          email: 'admin@correo1.com',
+          password: bcrypt.hashSync('A123456b', 10),
+          role: 'ADMIN',
+        },
+      });
+      delete (newUser as Partial<User>).password;
+      delete (newUser as Partial<User>).createdAt;
+      delete (newUser as Partial<User>).updatedAt;
+      delete (newUser as Partial<User>).inactiveAt;
+      delete (newUser as Partial<User>).is_active;
+      return {
+        user: newUser,
+        token: 'abd',
+      };
+    } catch (error) {
+      throw new HttpException(
+        `Error creating User ${error}`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
   async findAll(paginationDto: UserPaginationDto) {
     try {
       const totalPages = await this.user.count({

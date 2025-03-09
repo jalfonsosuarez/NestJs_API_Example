@@ -15,7 +15,7 @@
 
 * Replace user, password, host and port for yours own values.
   DATABASE_URL="mysql://user:password@host:port/duacode"
-* Secret word to encrypt passwords
+* Secret word to encrypt passwords.
   JWT_SECRET=an_aleatory_hash
 * Create a space to upload images in [Cloudinary](https://cloudinary.com/)
   * CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@
@@ -29,7 +29,7 @@
 
 To instal database run docker command: docker compose up -d
 
-* You need to be installed [docker](https://docs.docker.com/engine/install/).
+* You need install [docker](https://docs.docker.com/engine/install/).
 
 ## Create database
 
@@ -37,10 +37,16 @@ Generate Prisma Client `npx prisma generate`
 
 ## Start project
 
-* Ejecutar proyecto `npm run start:dev`
+* Ejecutar proyecto `pnpm start:dev`
 
 ## Api DOCS
 
 * localhost:3000/api/docs
+
+## Create the first user into database
+
+* Start project.
+* Call to end-point POST user/firstuser
+* IMPORTANT: For safety, delete the related methods from userController and serviceControler when you created the first user.
 
 

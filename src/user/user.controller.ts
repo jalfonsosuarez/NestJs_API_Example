@@ -45,6 +45,13 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  //! For safety, delete this method when you create a firsUser.
+  @Post('firstuser')
+  @ApiExcludeEndpoint()
+  createFirstUser() {
+    return this.userService.createFirstUser();
+  }
+
   @Get()
   @ApiResponse({
     status: HttpStatus.OK,
