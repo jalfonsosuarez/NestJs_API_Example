@@ -46,6 +46,7 @@ export class UserService extends PrismaClient implements OnModuleInit {
   }
 
   //! For safety, delete this method when you create a firsUser.
+  //? Be free to change datas, but remember the email and password to login.
   async createFirstUser() {
     try {
       const newUser = await this.user.create({
