@@ -52,7 +52,7 @@ export class UserService extends PrismaClient implements OnModuleInit {
         data: {
           first_name: 'Administrator',
           second_name: 'Admin',
-          email: 'admin@correo1.com',
+          email: 'admin@correo.com',
           password: bcrypt.hashSync('A123456b', 10),
           role: 'ADMIN',
         },
