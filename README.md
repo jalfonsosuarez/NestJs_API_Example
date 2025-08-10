@@ -21,6 +21,7 @@
   * Create a space to upload images in [Cloudinary](https://cloudinary.com/)
     * CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@
     * CLOUDINARY_FOLDER=
+  * Set PORT for API
 
 ## Node-Modules
 
