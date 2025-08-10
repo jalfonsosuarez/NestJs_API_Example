@@ -128,7 +128,7 @@ export class UserController {
   @Auth(ValidRoles.admin)
   async update(
     @Param("id", ParseUUIDPipe) id: string,
-    @Body() updateUserDto: UpdateUserDto
+    @Body() updateUserDto: UpdateUserDto,
   ) {
     return await this.userService.update(id, updateUserDto);
   }
